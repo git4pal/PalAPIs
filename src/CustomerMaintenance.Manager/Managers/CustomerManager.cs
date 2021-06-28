@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CustomerMaintenanceManager.DataGenerator;
+using CustomerMaintenanceManager.Repository;
 using CustomerMaintenanceManager.Dto;
 using CustomerMaintenanceManager.Interface;
 using CustomerMaintenanceManager.Model;
@@ -11,37 +11,39 @@ namespace CustomerMaintenanceManager.Managers
 {
     public class CustomerManager : ICustomerManager
     {
-        private readonly CustomerDataGenerator _customerDataGenerator;
+        private readonly CustomerRepository _customerRepository;
         private readonly IMapper _mapper;
         public CustomerManager(IMapper mapper)
         {
             _mapper = mapper;
-            _customerDataGenerator = new CustomerDataGenerator();
+            _customerRepository = new CustomerRepository();
         }
         public CustomerDto AddCustomer(CustomerDto customer)
         {
-            throw new NotImplementedException();
+            customer = _mapper.Map<CustomerDto>(_customerRepository.AddCustomer(_mapper.Map<Customer>(customer)));
+            return customer;
         }
 
-        public int DeleteCustomer(CustomerDto customer)
+        public int DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            return _customerRepository.DeleteCustomer(id);
         }
 
         public CustomerDto GetCustomer(int id)
         {
-            Customer cust = _customerDataGenerator.GetCustomer(id);
+            Customer cust = _customerRepository.GetCustomer(id);
             return _mapper.Map<CustomerDto>(cust);
         }
 
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(_customerDataGenerator.GetCustomers());            
+            return _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(_customerRepository.GetCustomers());            
         }
 
         public CustomerDto UpdateCustomer(CustomerDto customer)
         {
-            throw new NotImplementedException();
+            customer = _mapper.Map<CustomerDto>(_customerRepository.UpdateCustomer(_mapper.Map<Customer>(customer)));
+            return customer;
         }
     }
 }

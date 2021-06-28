@@ -11,7 +11,7 @@ namespace CustomerMaintenanceManager.Interface
         CustomerDto GetCustomer(int id);
 
         CustomerDto AddCustomer(CustomerDto customer);
-        int DeleteCustomer(CustomerDto customer);
+        int DeleteCustomer(int customer);
         CustomerDto UpdateCustomer(CustomerDto customer);
     }
 }

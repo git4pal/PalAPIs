@@ -48,5 +48,40 @@ namespace CustomerMaintenanceAPI.Controllers
                 return Ok(customer);
             }
         }
+
+        [HttpDelete("{id}", Name = "DeleteCustomer")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(CustomerDto), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<int>> DeleteCustomer(int id)
+        {
+            int customer = _customerManager.DeleteCustomer(id);
+            if (customer == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(customer);
+            }
+        }
+
+        [HttpPut(Name = "AddCustomer")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(CustomerDto), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<CustomerDto>> AddCustomer(CustomerDto customer)
+        {
+            customer = _customerManager.AddCustomer(customer);
+            return Ok(customer);
+        }
+
+
+        [HttpPost(Name = "UpdateCustomer")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(CustomerDto), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<CustomerDto>> UpdateCustomer(CustomerDto customer)
+        {
+            customer = _customerManager.UpdateCustomer(customer);
+            return Ok(customer);
+        }
     }
 }

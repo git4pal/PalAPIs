@@ -1,14 +1,15 @@
 ﻿using CustomerMaintenanceManager.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace CustomerMaintenanceManager.DataGenerator
+namespace CustomerMaintenanceManager.Repository
 {
-    public class CustomerDataGenerator
+    public class CustomerRepository
     {
         public static List<Customer> _customers;
-        public CustomerDataGenerator()
+        public CustomerRepository()
         {
             _customers = new List<Customer>();
             Customer cust = new Customer();
@@ -31,6 +32,25 @@ namespace CustomerMaintenanceManager.DataGenerator
         public Customer GetCustomer(int Id)
         {
             return _customers.Find(x => x.CustomerID == Id);
+        }
+
+        public Customer AddCustomer(Customer customer)
+        {
+            customer.CustomerID = _customers.Select(x => x.CustomerID).Max() + 1;
+            _customers.Add(customer);
+            return customer;
+        }
+        public int DeleteCustomer(int customerId)
+        {
+            return _customers.RemoveAll(x => x.CustomerID == customerId);
+        }
+
+
+        public Customer UpdateCustomer(Customer customer)
+        {
+            DeleteCustomer(customer.CustomerID);
+            _customers.Add(customer);
+            return customer;
         }
     }
 }
