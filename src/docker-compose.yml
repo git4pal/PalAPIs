@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  customermaintenance.api:
+    image: ${DOCKER_REGISTRY-}customermaintenanceapi
+    build:
+      context: .
+      dockerfile: CustomerMaintenance.API/Dockerfile
